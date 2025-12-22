@@ -1,55 +1,34 @@
 package main
 
 import (
-	"fmt"
-	"io"
 	"net/http"
+
+	"github.com/HosseinForouzan/caching-proxy/cache"
 )
-
-type cachedPage struct {
-	StatusCode int
-	Header http.Header
-	Body []byte
-}
-
 
 func main() {
 
-	cache := make(map[string]cachedPage)
-	url := "https://motamem.org/"
-	resp, err := http.Get(url)
-	if err != nil {
-		fmt.Errorf("Can't open the site")
-	}
-	defer resp.Body.Close()
+	url := "https://sanjesh.org/"
+	getPage, _ := cache.Get(url)
 
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		fmt.Println(err)
-	}
+	cache.Set(url, getPage)
 
-	cache[url] = cachedPage{
-		StatusCode: resp.StatusCode,
-		Header: resp.Header.Clone(),
-		Body: body,
-	}
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		cached := cache[url]
-		w.WriteHeader(cached.StatusCode)
+		w.WriteHeader(cache.CacheMemory[url].StatusCode)
 
-		for k, v := range cached.Header {
+		for k, v := range cache.CacheMemory[url].Header {
 			for _, val := range v {
 				w.Header().Add(k, val)
 			}
 		}
 
-		w.Write(cached.Body)
+		w.Write(cache.CacheMemory[url].Body)
 	})
 
 	http.ListenAndServe(":8080", nil)
-
-
-
-
 }
+
+
+
+
