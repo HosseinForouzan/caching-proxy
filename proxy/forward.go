@@ -9,9 +9,9 @@ import (
 )
 
 func GetUrl() string {
-	url := "https://motamem.org"
+	// url := "https://motamem.org"
 
-	return url
+	return cache.OriginServer
 }
 
 func checkExistenceOfUrl(url string) bool {

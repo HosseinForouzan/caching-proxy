@@ -11,3 +11,8 @@ type CachedPage struct {
 }
 
 var CacheMemory map[string]CachedPage = map[string]CachedPage{}
+
+var (
+	OriginServer string
+	Port string
+)
