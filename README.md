@@ -3,7 +3,7 @@
 A lightweight HTTP caching proxy server built with Go.  
 It forwards incoming requests to an origin server, caches responses, and serves repeated requests directly from cache to improve performance and reduce backend load.
 
-This project was built as part of the [roadmap.sh Backend Projects](https://roadmap.sh/projects/caching-server). :contentReference[oaicite:0]{index=0}
+This project was built as part of the [roadmap.sh Backend Projects](https://roadmap.sh/projects/caching-server).
 
 ---
 
